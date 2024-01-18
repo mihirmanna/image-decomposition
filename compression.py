@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 from matplotlib.patches import Rectangle
 from PIL import Image
-import sys
 
 
 class Quadtree:
@@ -46,9 +44,8 @@ class Quadtree:
         Draws a rectangle corresponding to this cell's boundary
         whose color is the average of uniformly sampled pixels from the cell
         """
-        # int() truncates result, hex() converts back to hexadecimal, strip() and rjust() to match mcolors format
-        avg_color = hex(int(np.mean(self.sample_pixel_colors(25)))).strip('0x').rjust(6, '0')
-        self.boundary.set_facecolor(mcolors.to_rgb(f'#{avg_color}'))
+        avg_color = self.average_color()
+        self.boundary.set_facecolor([i/255 for i in avg_color])
         self.plot.add_patch(self.boundary)
         
         if self.has_divided:
@@ -65,7 +62,7 @@ class Quadtree:
         :return: A list of the pixel colors in hexadecimal form
         """
         pix = self.image.load()
-        hex_pix = []
+        pix_list = []
 
         # Store hex colors of uniformly sampled pixels in this quadrant
         x = int(self.boundary.get_x())
@@ -74,15 +71,35 @@ class Quadtree:
         h = int(self.boundary.get_height())
         for i in range(x, x+w, step):
             for j in range(y, y+h, step):
-                hex_pix.append('0x%02x%02x%02x' % pix[i, j][0:3])  # Only use RGB values (ignore alpha)
-        return [eval(i) for i in hex_pix]
+                pix_list.append(pix[i, j][0:3])  # Only use RGB values (ignore alpha)
+
+        return pix_list
+
+    def average_color(self):
+        """
+        Determines the average color of this cell using the RGB channels from a sample of pixels
+
+        :return: The average color as a tuple [R, G, B]
+        """
+        pixels = self.sample_pixel_colors(25)
+        red, green, blue = [], [], []
+
+        for i in pixels:
+            red.append(i[0])
+            green.append(i[1])
+            blue.append(i[2])
             
+        avg_color = [np.mean(red), np.mean(green), np.mean(blue)]
+        return avg_color
+
     def check_color(self, max_depth):
         """
         Recursively checks if this cell's pixels are too varied, and subdivides it if necessary
         """
         pixels = self.sample_pixel_colors(25)
-        if np.std(pixels) > 0x100000 and not self.has_divided:
+        pxl_stdev = np.std([np.std([i[0] for i in pixels]), np.std([i[1] for i in pixels]), np.std([i[2] for i in pixels])])
+
+        if pxl_stdev > 1 and not self.has_divided:
             self.subdivide()
     
         if self.has_divided and max_depth > 0:
