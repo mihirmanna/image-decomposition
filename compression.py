@@ -99,7 +99,7 @@ class Quadtree:
         pixels = self.sample_pixel_colors(25)
         pxl_stdev = np.std([np.std([i[0] for i in pixels]), np.std([i[1] for i in pixels]), np.std([i[2] for i in pixels])])
 
-        if pxl_stdev > 1 and not self.has_divided:
+        if pxl_stdev > 0.5 and not self.has_divided:
             self.subdivide()
     
         if self.has_divided and max_depth > 0:
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     fig, ax = plt.subplots(figsize=(7, 7))
     ax.imshow(img)
 
-    rect = Rectangle((0, 0), img.width, img.height, facecolor='none', edgecolor='k', linewidth=1)
+    rect = Rectangle((0, 0), img.width, img.height, facecolor='none')
     qt = Quadtree(rect, ax, img)
     qt.check_color(6)
     qt.draw()
