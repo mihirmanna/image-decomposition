@@ -115,7 +115,7 @@ if __name__ == '__main__':
     img_file = 'obi.png'
     img = Image.open('samples/' + img_file)
 
-    fig, ax = plt.subplots(figsize=(7, 7))
+    fig, ax = plt.subplots()
     ax.imshow(img)
 
     rect = Rectangle((0, 0), img.width, img.height, facecolor='none')
@@ -124,6 +124,6 @@ if __name__ == '__main__':
     qt.draw()
 
     plt.axis('off')
-    plt.savefig('out/compressed_' + img_file)
+    plt.savefig('out/compressed_' + img_file, bbox_inches='tight', pad_inches = 0)
     plt.show()
     
