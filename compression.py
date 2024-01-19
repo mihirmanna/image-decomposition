@@ -97,9 +97,11 @@ class Quadtree:
         Recursively checks if this cell's pixels are too varied, and subdivides it if necessary
         """
         pixels = self.sample_pixel_colors(25)
-        pxl_stdev = np.std([np.std([i[0] for i in pixels]), np.std([i[1] for i in pixels]), np.std([i[2] for i in pixels])])
+        pxl_stdev = np.mean([np.std([i[0] for i in pixels]),
+                            np.std([i[1] for i in pixels]),
+                            np.std([i[2] for i in pixels])])
 
-        if pxl_stdev > 0.5 and not self.has_divided:
+        if pxl_stdev > 25 and not self.has_divided:
             self.subdivide()
     
         if self.has_divided and max_depth > 0:

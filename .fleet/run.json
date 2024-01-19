@@ -2,9 +2,9 @@
     "configurations": [
         {
             "type": "python",
-            "name": "Obi compression",
+            "name": "Image compression",
             "file": "compression.py",
-            "arguments": ["samples/obi.png"],
+            "arguments": [],
         },
         
     ]
