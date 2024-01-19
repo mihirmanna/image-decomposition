@@ -112,6 +112,7 @@ class Quadtree:
 
         
 if __name__ == '__main__':
+    my_dpi = 224
     img_file = 'obi.png'
     img = Image.open('samples/' + img_file)
 
@@ -124,6 +125,6 @@ if __name__ == '__main__':
     qt.draw()
 
     plt.axis('off')
-    plt.savefig('out/compressed_' + img_file, bbox_inches='tight', pad_inches = 0)
+    plt.savefig('out/compressed_' + img_file, dpi=my_dpi, bbox_inches='tight', pad_inches=0)
     plt.show()
     
