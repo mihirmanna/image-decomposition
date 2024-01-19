@@ -64,7 +64,7 @@ class Quadtree:
         pix = self.image.load()
         pix_list = []
 
-        # Store hex colors of uniformly sampled pixels in this quadrant
+        # Store RGB channels of uniformly sampled pixels in this quadrant
         x = int(self.boundary.get_x())
         y = int(self.boundary.get_y())
         w = int(self.boundary.get_width())

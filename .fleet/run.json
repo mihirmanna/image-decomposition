@@ -2,8 +2,8 @@
     "configurations": [
         {
             "type": "python",
-            "name": "Image compression",
-            "file": "compression.py",
+            "name": "Image segmentation",
+            "file": "segmentation.py",
             "arguments": [],
         },
         
