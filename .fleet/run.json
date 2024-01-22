@@ -2,8 +2,8 @@
     "configurations": [
         {
             "type": "python",
-            "name": "Image segmentation",
-            "file": "segmentation.py",
+            "name": "Image decomposition",
+            "file": "decomposition.py",
             "arguments": [],
         },
         

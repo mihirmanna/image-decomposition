@@ -125,6 +125,6 @@ if __name__ == '__main__':
     qt.draw()
 
     plt.axis('off')
-    plt.savefig('out/compressed_' + img_file, dpi=my_dpi, bbox_inches='tight', pad_inches=0)
+    plt.savefig('out/decomposed_' + img_file, dpi=my_dpi, bbox_inches='tight', pad_inches=0)
     plt.show()
     
